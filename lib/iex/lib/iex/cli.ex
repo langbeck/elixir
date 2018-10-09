@@ -51,7 +51,8 @@ defmodule IEx.CLI do
   """
   def start do
     if tty_works?() do
-      :user_drv.start([:"tty_sl -c -e", tty_args()])
+      tty_args()
+      |> IEx.Filter.start()
     else
       :application.set_env(:stdlib, :shell_prompt_func, {__MODULE__, :prompt})
       :user.start()
